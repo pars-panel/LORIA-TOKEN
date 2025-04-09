@@ -1,0 +1,23 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
+
+contract LoriaToken is ERC20Burnable, Ownable {
+    uint256 private _initialSupply = 10000000000 * 10 ** 18;  // 10 میلیارد توکن با دقت 18
+
+    constructor() ERC20("Loria", "LORIA") {
+        _mint(msg.sender, _initialSupply);
+    }
+
+    // امکان سوزاندن توکن‌ها
+    function burn(uint256 amount) public override {
+        super.burn(amount);
+    }
+
+    // فقط مالک می‌تواند مالک اولیه را تغییر دهد
+    function changeOwner(address newOwner) public onlyOwner {
+        transferOwnership(newOwner);
+    }
+}
